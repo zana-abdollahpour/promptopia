@@ -9,6 +9,7 @@ export default function Nav() {
   const isUserLogedIn = true;
   const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
+
   useEffect(() => {
     const setProviders = async () => {
       const response = await getProviders();
