@@ -32,53 +32,65 @@ export default function Nav() {
         <p className="logo_text">Promptopia</p>
       </Link>
 
+      {/* Desktop Navigation */}
       <div className="sm:flex hidden">
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
             <Link href="/create-prompt" className="black_btn">
-              Create Posts
+              Create Post
             </Link>
-            <button type="button" onClick={signOut} className="outline_btn">
+            <button
+              type="button"
+              onClick={() => {
+                signOut();
+              }}
+              className="outline_btn"
+            >
               Sign Out
             </button>
+
             <Link href="/profile">
               <Image
-                src={session?.user.image}
-                className="rounded-full"
-                alt="Profile"
+                src={session?.user?.image || "/assets/images/logo.svg"}
                 width={37}
                 height={37}
+                className="rounded-full"
+                alt="profile"
               />
             </Link>
           </div>
         ) : (
           <>
             {providers &&
-              Object.values(providers).map((provider) => (
-                <button
-                  type="button"
-                  key={provider.name}
-                  onClick={() => signIn(provider.id)}
-                  className="black_btn"
-                >
-                  Sign In
-                </button>
-              ))}
+              Object.values(providers).map((provider) => {
+                return (
+                  <button
+                    type="button"
+                    className="black_btn"
+                    key={provider.name}
+                    onClick={() => signIn(provider.id)}
+                  >
+                    Sign In with {provider.name}
+                  </button>
+                );
+              })}
           </>
         )}
       </div>
 
+      {/* Mobile Navigation */}
       <div className="sm:hidden flex relative">
         {session?.user ? (
           <div className="flex">
             <Image
-              src={session?.user.image}
-              className="rounded-full"
-              alt="Profile"
+              src={session?.user?.image || "/assets/images/logo.svg"}
               width={37}
               height={37}
-              onClick={() => setToggleDropdown((cur) => !cur)}
+              className="rounded-full"
+              alt="profile"
+              onClick={() => setToggleDropdown((prev) => !prev)}
             />
+
             {toggleDropdown && (
               <div className="dropdown">
                 <Link
@@ -86,7 +98,7 @@ export default function Nav() {
                   className="dropdown_link"
                   onClick={() => setToggleDropdown(false)}
                 >
-                  My Prrofile
+                  My Profile
                 </Link>
                 <Link
                   href="/create-prompt"
@@ -111,16 +123,18 @@ export default function Nav() {
         ) : (
           <>
             {providers &&
-              Object.values(providers).map((provider) => (
-                <button
-                  type="button"
-                  key={provider.name}
-                  onClick={() => signIn(provider.id)}
-                  className="black_btn"
-                >
-                  Sign In
-                </button>
-              ))}
+              Object.values(providers).map((provider) => {
+                return (
+                  <button
+                    type="button"
+                    className="black_btn"
+                    key={provider.name}
+                    onClick={() => signIn(provider.id)}
+                  >
+                    Sign In with {provider.name}
+                  </button>
+                );
+              })}
           </>
         )}
       </div>
